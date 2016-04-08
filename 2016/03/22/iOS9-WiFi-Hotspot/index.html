@@ -7,20 +7,20 @@
   <title>iOS9_WiFi_Hotspot | 子木的小世界</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="CaptiveNetwork 失效iOS中关于Wi-Fi相关获取和设置接口比较少，如果不越狱的话，之前常用CaptiveNetwork相关API。然而iOS9中，这部分API已经失效。如果之前使用它来获取Wi-Fi相关信息如下面代码，则有可能无法成功：
-12345678910111213141516#import &amp;lt;SystemConfiguration/CaptiveNetwork.h&amp;g">
+123456789101112#import &amp;lt;SystemConfiguration/CaptiveNetwork.h&amp;gt;+(NSSt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS9_WiFi_Hotspot">
 <meta property="og:url" content="http://yoursite.com/2016/03/22/iOS9-WiFi-Hotspot/index.html">
 <meta property="og:site_name" content="子木的小世界">
 <meta property="og:description" content="CaptiveNetwork 失效iOS中关于Wi-Fi相关获取和设置接口比较少，如果不越狱的话，之前常用CaptiveNetwork相关API。然而iOS9中，这部分API已经失效。如果之前使用它来获取Wi-Fi相关信息如下面代码，则有可能无法成功：
-12345678910111213141516#import &amp;lt;SystemConfiguration/CaptiveNetwork.h&amp;g">
+123456789101112#import &amp;lt;SystemConfiguration/CaptiveNetwork.h&amp;gt;+(NSSt">
 <meta property="og:image" content="http://7xsqs0.com2.z0.glb.clouddn.com/NEInclude.png">
 <meta property="og:image" content="http://7xsqs0.com2.z0.glb.clouddn.com/SSID.png">
-<meta property="og:updated_time" content="2016-04-08T03:51:43.000Z">
+<meta property="og:updated_time" content="2016-04-08T06:54:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS9_WiFi_Hotspot">
 <meta name="twitter:description" content="CaptiveNetwork 失效iOS中关于Wi-Fi相关获取和设置接口比较少，如果不越狱的话，之前常用CaptiveNetwork相关API。然而iOS9中，这部分API已经失效。如果之前使用它来获取Wi-Fi相关信息如下面代码，则有可能无法成功：
-12345678910111213141516#import &amp;lt;SystemConfiguration/CaptiveNetwork.h&amp;g">
+123456789101112#import &amp;lt;SystemConfiguration/CaptiveNetwork.h&amp;gt;+(NSSt">
 <meta name="twitter:image" content="http://7xsqs0.com2.z0.glb.clouddn.com/NEInclude.png">
   
     <link rel="alternative" href="/atom.xml" title="子木的小世界" type="application/atom+xml">
@@ -195,8 +195,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="CaptiveNetwork-失效"><a href="#CaptiveNetwork-失效" class="headerlink" title="CaptiveNetwork 失效"></a>CaptiveNetwork 失效</h3><p>iOS中关于Wi-Fi相关获取和设置接口比较少，如果不越狱的话，之前常用CaptiveNetwork相关API。<br>然而iOS9中，这部分API已经失效。如果之前使用它来获取Wi-Fi相关信息如下面代码，则有可能无法成功：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;SystemConfiguration/CaptiveNetwork.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">+(<span class="built_in">NSString</span> *) getWiFiSSID&#123;</span><br><span class="line">    <span class="built_in">NSArray</span> *ifs = (__bridge_transfer <span class="keyword">id</span>)CNCopySupportedInterfaces();    </span><br><span class="line">    <span class="keyword">id</span> info = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *ifnam <span class="keyword">in</span> ifs) &#123;</span><br><span class="line">        </span><br><span class="line">        info = (__bridge_transfer <span class="keyword">id</span>)CNCopyCurrentNetworkInfo((__bridge <span class="built_in">CFStringRef</span>)ifnam);</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ =&gt; %@"</span>, ifnam, info);  <span class="comment">//单个数据info[@"SSID"]; info[@"BSSID"];</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (info &amp;&amp; [info count]) &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> info ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;SystemConfiguration/CaptiveNetwork.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">+(<span class="built_in">NSString</span> *) getWiFiSSID&#123;</span><br><span class="line">    <span class="built_in">NSArray</span> *ifs = (__bridge_transfer <span class="keyword">id</span>)CNCopySupportedInterfaces();    </span><br><span class="line">    <span class="keyword">id</span> info = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *ifnam <span class="keyword">in</span> ifs) &#123;</span><br><span class="line">        info = (__bridge_transfer <span class="keyword">id</span>)CNCopyCurrentNetworkInfo((__bridge <span class="built_in">CFStringRef</span>)ifnam);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ =&gt; %@"</span>, ifnam, info);  <span class="comment">//单个数据info[@"SSID"]; info[@"BSSID"];</span></span><br><span class="line">        <span class="keyword">if</span> (info &amp;&amp; [info count]) &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> info ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>取而代之的则是实用<code>NetworkExtension framework</code>里的<code>NEHotspotHelper class</code>去获取这些信息。</p>
+<a id="more"></a>
 <h3 id="NetworkExtension"><a href="#NetworkExtension" class="headerlink" title="NetworkExtension"></a>NetworkExtension</h3><p><code>NetworkExtension framework</code> 包含如下4个部分：</p>
 <pre><code>NEHotspotManager
 NEVPNManager

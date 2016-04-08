@@ -260,25 +260,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="CaptiveNetwork-失效"><a href="#CaptiveNetwork-失效" class="headerlink" title="CaptiveNetwork 失效"></a>CaptiveNetwork 失效</h3><p>iOS中关于Wi-Fi相关获取和设置接口比较少，如果不越狱的话，之前常用CaptiveNetwork相关API。<br>然而iOS9中，这部分API已经失效。如果之前使用它来获取Wi-Fi相关信息如下面代码，则有可能无法成功：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;SystemConfiguration/CaptiveNetwork.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">+(<span class="built_in">NSString</span> *) getWiFiSSID&#123;</span><br><span class="line">    <span class="built_in">NSArray</span> *ifs = (__bridge_transfer <span class="keyword">id</span>)CNCopySupportedInterfaces();    </span><br><span class="line">    <span class="keyword">id</span> info = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *ifnam <span class="keyword">in</span> ifs) &#123;</span><br><span class="line">        </span><br><span class="line">        info = (__bridge_transfer <span class="keyword">id</span>)CNCopyCurrentNetworkInfo((__bridge <span class="built_in">CFStringRef</span>)ifnam);</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ =&gt; %@"</span>, ifnam, info);  <span class="comment">//单个数据info[@"SSID"]; info[@"BSSID"];</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (info &amp;&amp; [info count]) &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> info ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;SystemConfiguration/CaptiveNetwork.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">+(<span class="built_in">NSString</span> *) getWiFiSSID&#123;</span><br><span class="line">    <span class="built_in">NSArray</span> *ifs = (__bridge_transfer <span class="keyword">id</span>)CNCopySupportedInterfaces();    </span><br><span class="line">    <span class="keyword">id</span> info = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *ifnam <span class="keyword">in</span> ifs) &#123;</span><br><span class="line">        info = (__bridge_transfer <span class="keyword">id</span>)CNCopyCurrentNetworkInfo((__bridge <span class="built_in">CFStringRef</span>)ifnam);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ =&gt; %@"</span>, ifnam, info);  <span class="comment">//单个数据info[@"SSID"]; info[@"BSSID"];</span></span><br><span class="line">        <span class="keyword">if</span> (info &amp;&amp; [info count]) &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> info ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>取而代之的则是实用<code>NetworkExtension framework</code>里的<code>NEHotspotHelper class</code>去获取这些信息。</p>
-<h3 id="NetworkExtension"><a href="#NetworkExtension" class="headerlink" title="NetworkExtension"></a>NetworkExtension</h3><p><code>NetworkExtension framework</code> 包含如下4个部分：</p>
-<pre><code>NEHotspotManager
-NEVPNManager
-NETunnelProvider
-NEFilterProvider
-</code></pre><p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/NEInclude.png" alt="NetworkExtension"></p>
-<h3 id="NEHotspotHelper"><a href="#NEHotspotHelper" class="headerlink" title="NEHotspotHelper"></a>NEHotspotHelper</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p><code>NEHotspotHelper class</code> 主要用于Wi-Fi热点的认证，允许APP参与加入到Wi-Fi热点的认证中：</p>
-<pre><code>1. 声明可靠热点
-2. 执行初始认证
-3. 维持认证会话
-</code></pre><p>最简单的例子就是，如同Wi-Fi万能钥匙一样在Wi-Fi扫描列表的SSID下面显示出厂商的相关信息。</p>
-<p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/SSID.png" alt="SSID"></p>
-<h4 id="申请"><a href="#申请" class="headerlink" title="申请"></a>申请</h4><p>如果要使用相关的API，需要发送邮件给<code>networkextension@apple.com</code>，然后会从那里得到回复，再需要回答些问题。（ps：本人也是刚回答完问题）</p>
-<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p>由于还没有申请下来，所以先贴几段<code>stackoverflow</code>上的代码</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;NetworkExtension/NetworkExtension.h&gt;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">NSArray</span> * networkInterfaces = [NEHotspotHelper supportedNetworkInterfaces];  </span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Networks %@"</span>,networkInterfaces);  </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(NEHotspotNetwork *hotspotNetwork <span class="keyword">in</span> networkInterfaces) &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *ssid = hotspotNetwork.SSID;</span><br><span class="line">    <span class="built_in">NSString</span> *bssid = hotspotNetwork.BSSID;</span><br><span class="line">    <span class="built_in">BOOL</span> secure = hotspotNetwork.secure;</span><br><span class="line">    <span class="built_in">BOOL</span> autoJoined = hotspotNetwork.autoJoined;</span><br><span class="line">    <span class="keyword">double</span> signalStrength = hotspotNetwork.signalStrength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableDictionary</span>* options = [[<span class="built_in">NSMutableDictionary</span> alloc] init];</span><br><span class="line">[options setObject:<span class="string">@"Try Here"</span> forKey:kNEHotspotHelperOptionDisplayName];</span><br><span class="line"></span><br><span class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="string">"com.myapp.ex"</span>, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">BOOL</span> returnType = [NEHotspotHelper registerWithOptions:options queue:queue handler: ^(NEHotspotHelperCommand * cmd) &#123;</span><br><span class="line">   <span class="keyword">if</span> (cmd.commandType == kNEHotspotHelperCommandTypeEvaluate || cmd.commandType == kNEHotspotHelperCommandTypeFilterScanList ) &#123;</span><br><span class="line">       <span class="keyword">for</span> (NEHotspotNetwork* network  <span class="keyword">in</span> cmd.networkList) &#123;</span><br><span class="line">           <span class="keyword">if</span> ([network.SSID isEqualToString:<span class="string">@"Internet"</span>]) &#123;</span><br><span class="line">               [network setConfidence:kNEHotspotHelperConfidenceHigh];</span><br><span class="line"></span><br><span class="line">               <span class="comment">// This is required</span></span><br><span class="line">               NEHotspotHelperResponse *response = [cmd createResponse:kNEHotspotHelperResultSuccess];</span><br><span class="line">               [response setNetworkList:@[ network ]];</span><br><span class="line">               [response deliver];   </span><br><span class="line"></span><br><span class="line">               <span class="built_in">NSLog</span>(<span class="string">@"Confidance set to high for ssid:%@"</span>,network.SSID); </span><br><span class="line">           &#125;  </span><br><span class="line">       &#125;    </span><br><span class="line">   &#125; </span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-
       
     </div>
     
@@ -287,6 +270,10 @@ NEFilterProvider
       
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2016/03/22/iOS9-WiFi-Hotspot/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -333,27 +320,7 @@ NEFilterProvider
         <h2 id="回首过去"><a href="#回首过去" class="headerlink" title="回首过去"></a>回首过去</h2><h3 id="大学"><a href="#大学" class="headerlink" title="大学"></a>大学</h3><p>大学四年，优秀过，也曾颓废过，参加了各种比赛，获得了各种奖学金，最后混了个优秀毕业生，同时找到了现在的老婆，而在最后也顺利签约了心目中的公司。</p>
 <p>在学习上，一直以来自己都是应试教育的产物，做题做题做题…大学的课程在老师们辛勤的灌输下，在每次考试临时抱佛脚的突击中，总能拿到满意的成绩。然而，在工作中看来，却是如此的不足，尤其是我们学校那自由度极高的选课，让我在大二时，莫名的选择许多乱七八糟的课程，而不论是硬件开发，嵌入式开发，软件工程方面的主要课程，我都错过了，没有学过数据结构，算法导论，计算机组成原理等课程的弊端工作中显露无疑。</p>
 <p>在技术上，一直在追寻，在摸索：<br>磕磕碰碰进了刘老师的综合实验室，一直也没完成些有意义的项目，没有捣鼓出什么东西来。<br>后又进了小车队，这一年可以说是最充实的日子，也是真正接触和参与到实际的项目中来。虽然最后依靠主场之利获取了一定的成绩，但是，仔细回想这段时间，从开始的软件开发上位机，转到PCB制版，再到最后的硬件调试，我都是在前人的基础上和指导下做的这些事情，好听点是站在巨人的肩膀上，实际就是依样画葫芦。现在回想起之前做过的事情，连最基础的东西都已经遗忘干净了。</p>
-<p>不是自己摸索出来的东西，没有掌握的东西，总是要还的。。。</p>
-<h3 id="工作1-HW"><a href="#工作1-HW" class="headerlink" title="工作1:HW"></a>工作1:HW</h3><p>在玩了整整一年之后，期间没有做任何学习，完全的放荡，在2011.6月正式入职了HW。有可能因为是在简历中有关硬件方面的知识，我被分配到了中央硬件部，做服务器管理软件的开发。首次接触到Linux，刚开始三个月就一直啃《鸟哥的Linux私房菜》，认识到了Linux的博大精深，学习了一些简单的命令。然而，三个月的时间，并没让我对Linux有入门的感觉，同样还是不写shell，依旧不会使用复杂的命令（grep/sed/awk等）。</p>
-<p>之后在HW待的一年半时间里，主要都是业务方面的工作，参与到了E6000服务器MM板软件的开发，具体的工作内容，也就是在古老版本的基础上，做些按照最新的协议的做新开发。虽然这块板子是新做的，但是主要的驱动移植，硬件调试都是leader自己来完成的，而我或者说项目组的另外3人都是做些边边角角的工作，而不论是WEB，SNMP，用户权限等功能的开发，基本都是在其他项目组的成果上换个壳。而我即使在换壳的过程中，也没有深入去啃手头的工作内容。新功能的开发其实早就完成，而接下去就是漫无止境的测试，修改BUG，再测试，再修改BUG…由于HW测试总是在项目中占据着重要地位，而在CPI的压力下，测试的BUG总是那么的令人不愉快，以及莫名其妙。</p>
-<p>项目的拖沓，老大的无能，项目组成员的不开心，以及连续两年的调薪无望，将我从对HW的憧憬，变成了失望，而离职的心思早已深根发芽。最后借着组织结构的调整，项目组的裁撤，我也选择离开。。。</p>
-<p>在技术上，接触的东西其实还是很多，例如Linux shell，socket开发，多线程开发，基本的WEB开发等，总体来说就是成为了一个入门的Linux应用层开发人员。然而，上述说的几方面知识，自己只能达到了解，使用的程度，却没有深入掌握。或者说复杂的应用，就只能去百度／谷歌上查找了。</p>
-<h3 id="工作2-HIK"><a href="#工作2-HIK" class="headerlink" title="工作2:HIK"></a>工作2:HIK</h3><p>这里的工作不想多说，整体和HW类似，多了一份国企管理人员的勾心斗角，各个方面都是学习HW的模式，加班更甚，项目更加拖沓，开发小组之间扯皮的事情也经常发生，最后工作一年还是走了。。。</p>
-<p>在技术上，开始接触Android底层的Linux层开发，在这方面有过深入的了解，也许由于基础比较薄弱的问题，多次阅读相关方面的资料后，对其理解还是不是很到位，好吧，对比以前的工作学习态度，其实已经进步很多了。此时，对移动互联网产生了浓厚的兴趣，自己采购了macbook，iphone开始学习Objective-C。<br>至于为啥是iOS，而不是Android呢？ 也许是被iOS的简洁所吸引，也许是因为语言上的共通性，也许是喜欢它的封闭，而不去像Android一样考虑各种各样的机型。</p>
-<h3 id="工作3-创业公司"><a href="#工作3-创业公司" class="headerlink" title="工作3:创业公司"></a>工作3:创业公司</h3><p>创业公司的灵活，激情，充满朝气吸引了我，而至今一年半的时间里，我不必再去为大公司的各种操蛋的事情而苦恼，可以做一只快乐的程序猿了。短短的一年半里，我也完成了3个项目的开发，并且都已经上线，开始销售，业绩也还不错吧。</p>
-<h4 id="Wi-Fi智能音箱"><a href="#Wi-Fi智能音箱" class="headerlink" title="Wi-Fi智能音箱"></a>Wi-Fi智能音箱</h4><p>这是个传统家电与移动互联网的结合，而我在此也许是起到了桥梁的作用。通过嵌入公司的Wi-Fi模块，实现传统音箱Wi-Fi连接的需求，并且可以在手机上实现控制音箱，传输音频等功能。<br>在这个项目中我也发挥了前年工作的积累，将公司的SDK，扩展成了Android，iOS以及Linux版本的SDK库。</p>
-<h4 id="智能路由器"><a href="#智能路由器" class="headerlink" title="智能路由器"></a>智能路由器</h4><p>一款基于OpenWrt的商业路由器，固件从无到有，都是我和另一个同事，慢慢摸索出来的。当然，同事的工作更加重要和核心。而我负责应用协议的开发，以及该路由器富有特色的WEB开发（Luci）。第一次深入了解一个新技术，到掌握，还是值得为自己点赞的。在此期间，顺便带了个徒弟，也算是职业生涯的一次进步吧。</p>
-<h4 id="不倒翁APP"><a href="#不倒翁APP" class="headerlink" title="不倒翁APP"></a>不倒翁APP</h4><p>教会徒弟，解放师傅。终于我可以投入到公司的APP开发中了，经过段时间的学习和转变，期间也参与了下其他APP的开发，用于起步和上手。不倒翁APP其实就是一款典型的商家管理APP，没有大的用户市场，只能作为智能路由器产品的附属工具使用。当然对于我来说，却是一个很大的挑战，全新的语言，全新的产品，在工作中一边努力学习，一边还要负责产品的点点滴滴。当然还要感谢Android同事在此期间的帮忙，以及项目组同事的努力。在APP上线的那天，内心那是相当的激动～</p>
-<p>在技术上，既然已经选择了移动开发的这条路，那即使前面荆棘再多，也要一步一个脚印的前行。<br>语言上，Objective-C作为C语言的超集，有许多的通性，但有更多的特性。在学习工作中，也偶尔比较与C语言开发的不同（面像过程和面向对象开发，回调函数和协议／block，pthead和GCD，socket和AFNetworking…）。<br>系统上，熟悉了iOS的Foundation框架和CoCoaTouch，当然只是项目中运用到的部分，在后续工作中，需要学习更多。<br>架构上，也开始接触了部分设计模式，最常见的MVC，Singleton，观察者模式等，这是在之前开发中有所应用，却没有意识到的一方面。</p>
-<h2 id="展望未来"><a href="#展望未来" class="headerlink" title="展望未来"></a>展望未来</h2><p>不知不觉，工作已经将近5年，在技术路线上走的也是磕磕碰碰，终于也是找到了一条自己喜欢的路。俗话说三十而立，而如今已经28的我，已经成家的我，其实还是没有立业，接下去的两年里，需要按下自己躁动的心，耐心的做点事情，不说实现XXX目标，至少在下次做总结时，不是这么低落。</p>
-<p>技术上，既然路也选好，那就要耐心前行，一步一步攀登，切勿好高骛远。<br>今年需要做的点点滴滴：   </p>
-<ol>
-<li>Objective-C语言基础不足，需要深入了解。 </li>
-<li>本以为有C语言的基础，能较快上手iOS runtime方面知识。但是现实是残酷，还需耐下心来学习。</li>
-<li>技术不止是语言，iOS的技术框架同样重要，Foundation框架和CoCoaTouch里的众多部分还要一个个解决</li>
-<li>一直想做个自己玩的APP，加油！</li>
-</ol>
-
+<p>不是自己摸索出来的东西，没有掌握的东西，总是要还的…</p>
       
     </div>
     
@@ -362,6 +329,10 @@ NEFilterProvider
       
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2016/03/22/新的开始/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
