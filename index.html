@@ -185,7 +185,8 @@
         <blockquote>
 <p>本文为翻译Apple Developer开发文档<a href="https://developer.apple.com/ibeacon/" target="_blank" rel="external">Getting Started with iBeacon</a>，由于本人水平问题，肯定存在诸多问题，请见谅！</p>
 </blockquote>
-<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>iBeacon是在iOS7新推出的感知位置可能性的应用。利用低功耗蓝牙（BLE），携带iBeancon技术的设备能够围绕某一对象建立监测区域。依据iOS设备与信号源之间的距离，能够判断设备何时进入或者离开该区域。所以在使用iBeacon技术时需要有硬件和软件两方面的考虑，本文档对两方面都进行了介绍，包括使用建议和最佳实践，确保有个高效的部署，使得有个优秀的用户体验。</p>
+<p>##概况</p>
+<p>iBeacon是在iOS7新推出的感知位置可能性的应用。利用低功耗蓝牙（BLE），携带iBeancon技术的设备能够围绕某一对象建立监测区域。依据iOS设备与信号源之间的距离，能够判断设备何时进入或者离开该区域。所以在使用iBeacon技术时需要有硬件和软件两方面的考虑，本文档对两方面都进行了介绍，包括使用建议和最佳实践，确保有个高效的部署，使得有个优秀的用户体验。</p>
 <p>iBeacon有三个不同的角色，根据你的需求，你有可能扮演其中的一个，两个甚至三个：</p>
 <pre><code>1.    APP 开发者
     如果你想要添加iBeacon到你的应用内，你需要使用Core Location APIs ,当iOS设备进入或者离开检测区域时，能够收到iOS的通知。你同样也能够将设备发送iBeacon广告。所以这些你只需在程序内包含iOS SDK即可，无需license。
