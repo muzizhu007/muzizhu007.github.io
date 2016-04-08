@@ -25,7 +25,7 @@ iBeacon是在iOS7新推出的感知位置可能性的应用。利用低功耗蓝
 <meta property="og:image" content="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E8%A1%B0%E5%87%8F.png">
 <meta property="og:image" content="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E6%B5%8B%E8%B7%9D.png">
 <meta property="og:image" content="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E6%A0%A1%E5%87%86.png">
-<meta property="og:updated_time" content="2016-04-08T06:41:28.000Z">
+<meta property="og:updated_time" content="2016-04-08T06:43:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Getting Started with iBeacon">
 <meta name="twitter:description" content="本文为翻译Apple Developer开发文档Getting Started with iBeacon，由于本人水平问题，肯定存在诸多问题，请见谅！
@@ -226,7 +226,8 @@ iBeacon是在iOS7新推出的感知位置可能性的应用。利用低功耗蓝
 3.    使用iBeacon技术制造设备
     如果你有兴趣制造iBeacon技术的设备，你需要在制造之前申请license。可以通过访问https://developer.apple.com/ibeacon/ 
     申请iBeacon license。 被许可方可以访问相关技术规范，使用iBeacon logo以及iBeacon的识别指南。
-</code></pre><h2 id="iBeacon技术设备"><a href="#iBeacon技术设备" class="headerlink" title="iBeacon技术设备"></a>iBeacon技术设备</h2><p>iBeacon技术的设备可以使用纽扣电池供电一个月以上，或者使用更大的电池提供更长时间，或者使用外部电源更长时间工作。iOS设备统一能够配置生成iBeacon广告，但是功能范围上受限。可以使用在销售点或者售货亭，或者只是短时间使用内使用iBeacon的应用。</p>
+</code></pre><a id="more"></a>
+<h2 id="iBeacon技术设备"><a href="#iBeacon技术设备" class="headerlink" title="iBeacon技术设备"></a>iBeacon技术设备</h2><p>iBeacon技术的设备可以使用纽扣电池供电一个月以上，或者使用更大的电池提供更长时间，或者使用外部电源更长时间工作。iOS设备统一能够配置生成iBeacon广告，但是功能范围上受限。可以使用在销售点或者售货亭，或者只是短时间使用内使用iBeacon的应用。</p>
 <p>iBeacon广告通过BLE包含以下信息：</p>
 <p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E5%AD%97%E6%AE%B5.png" alt="iBeacon字段"></p>
 <p>UUID，Major和Minor三个值提供了iBeacon的标识信息。<br>简单的说就是该信息就是对UUID标识的信息，再通过Major和Minor字段进行细分确定身份性质。 UUIDs 可以通过uuidgen命令生成，或者使用NSUUID基础类生成</p>
