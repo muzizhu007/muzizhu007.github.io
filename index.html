@@ -91,32 +91,32 @@
     申请iBeacon license。 被许可方可以访问相关技术规范，使用iBeacon logo以及iBeacon的识别指南。
 </code></pre><h2 id="iBeacon技术设备"><a href="#iBeacon技术设备" class="headerlink" title="iBeacon技术设备"></a>iBeacon技术设备</h2><p>iBeacon技术的设备可以使用纽扣电池供电一个月以上，或者使用更大的电池提供更长时间，或者使用外部电源更长时间工作。iOS设备统一能够配置生成iBeacon广告，但是功能范围上受限。可以使用在销售点或者售货亭，或者只是短时间使用内使用iBeacon的应用。</p>
 <p>iBeacon广告通过BLE包含以下信息：</p>
-<p><img src="iBeacon字段.png" alt=""></p>
+<p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E5%AD%97%E6%AE%B5.png" alt="iBeacon字段"></p>
 <p>UUID，Major和Minor三个值提供了iBeacon的标识信息。<br>简单的说就是该信息就是对UUID标识的信息，再通过Major和Minor字段进行细分确定身份性质。 UUIDs 可以通过uuidgen命令生成，或者使用NSUUID基础类生成</p>
 <p>下面的表格是个全国连锁店的例子，对这三个值进行说明。UUID在所有地区都是相同的。这使得iOS设备能够使用单个标识符识别出任何存储的单个检测区域。每个特定的商店，旧金山，巴黎和伦敦，都能被分配到一个唯一的Major值，使得设备能够识别出该商店。在每个商店，不同部门分配不同的Minor的值，尽管在不同店里值会相同，但是能够使App更容易的识别出该部门。</p>
-<p><img src="iBeacon例子.png" alt=""></p>
+<p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E4%BE%8B%E5%AD%90.png" alt="iBeacon例子"></p>
 <p>使用以上信息，iOS设备能够识别出它进入或离开的时间，进入的商店和经过的部门。这些值由个人或者组织在部署时决定，而无需在Apple上注册。</p>
 <p>iBeacon依赖于BLE（低功耗蓝牙），因此需要iPhone4s以上，iPod touch5代以上，iPad 3以上或者iPad mini。</p>
 <p>了解更多的iBeacon设备，你需要申请Apple License。请访问<br><a href="https://developer.apple.com/ibeacon" target="_blank" rel="external">https://developer.apple.com/ibeacon</a> 申请iBeacon license。</p>
 <h2 id="iBeacon软件-－-Core-Location-APIs"><a href="#iBeacon软件-－-Core-Location-APIs" class="headerlink" title="iBeacon软件 － Core Location APIs"></a>iBeacon软件 － Core Location APIs</h2><p>iOS7之前的版本Core Location 使用“电子围栏”技术（经纬度和半径）定义监测区域。iBeacon 则提供了新的更灵活的方式定义一个监测区域。这个允许信源绑定对象不被固定在一个地方。例如：信标装置可以用于设定一个区域的周围像食物卡车或游轮上的可移动对象。此外，相同的标识符可以由多个设备。这将允许一个零售连锁店在所有分店使用相同标识符，并允许iOS设备知道当它进入其中的任何一个。</p>
 <h3 id="隐私与定位"><a href="#隐私与定位" class="headerlink" title="隐私与定位"></a>隐私与定位</h3><p>由于iBeacon是Core Location的一部分，在使用之前需要做相同的用户许可。用户可以看到如下用户授权提示当App使用iBeacon APIs时：</p>
-<p><img src="iBeacon允许.png" alt=""></p>
+<p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E5%85%81%E8%AE%B8.png" alt="iBeacon允许"></p>
 <p>应用使Core Location的API监控区域的话，它会出现在 Privacy &gt; Location Services 下，用户在任何时候都可以允许或者拒绝应用使用iBeacon功能。此外，所用iBeacon相关联的任何蓝牙数据包都被排除在CoreBluetooth的API。</p>
 <h3 id="iBeacon精度"><a href="#iBeacon精度" class="headerlink" title="iBeacon精度"></a>iBeacon精度</h3><p>为保证高效的用户体验，如何考虑信号从信源发出后被检测到和确定精度是非常重要的。当iOS设备接收到信源的信号时，它使用信号强度（RSSI, or Received Signal Strength Indication）来确定接近信源，即接近其预计的精度。信号越强，iOS越接近信源，信号越弱，iOS越远离信源。</p>
 <p>可以从现有iOS设备的GPS的工作上理解精度的概念。当iOS设备能够清晰的接受到GPS信号时（比如在开放的户外环境），你的位置就能更精确的被确定。在地图应用中可以很容易的看出定位精度，有一个蓝色的圆圈表示。如果设备在室内或者GPS信号被阻挡，那么蓝色圆圈放大表示精度降低。如果信号到卫星的阻挡减少（设备移动到户外或从背包拿出）蓝色圈则会变小。更好的信号接收设备能够缩小误差的幅度，更准确定位。</p>
-<p><img src="iBeacon信号.png" alt=""></p>
+<p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E4%BF%A1%E5%8F%B7.png" alt="iBeacon信号"></p>
 <p>iBeacon的信号被设备接收，信号强度通常与设备到信号源的距离相关。在理想条件下（设备和信号源之间线路畅通），越靠近结果越精确。<br>如Figure 1显示，设备原理信号源时，信号强度越弱。由于信号减弱，iOS设备就不会有高可信度的精度表示到信号源的接近距离。类似于上面GPS中较大的蓝色圆圈。</p>
 <p>当设备越靠近信号源，接收到的信号就增大，并且精度也提高。这就类似于GPS的蓝色圆圈变小。如Figure 2 所示，当设备越靠近信号源时精度的可信度就越高。</p>
 <p>然而，和GPS类似，信号强度会被物体阻挡减少，如建筑物，或放置在背包，钱包，口袋里。信号衰减，或信号的强度的损失，可以由许多因素引起。信号源周边的物体，如Figure 3 显示有墙壁在信号源和设备之间，就会影响接收信号强度，这有可能导致设备认为信号源还在比它实际位置更远的地方。</p>
 <p>人体本身也会使蓝牙信号衰减。当你背对信号源时（身体处于设备和信号源之间）就会影响信号强度，减少精度。Figure 4显示信号强度被减弱当人处于信号源和设备之间时。</p>
-<p><img src="iBeacon衰减.png" alt=""></p>
+<p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E8%A1%B0%E5%87%8F.png" alt="iBeacon衰减"></p>
 <p>当创建应用使用GPS或者iBeancon时，考虑精度是非常重要的。从Core Location对象获取的值(CLLocation类horizontalAccuracy属性，或者CLBeacon类的accuracy 属性)表明其不确定性或误差。两者的单位都是米。该值越高，位置的准确性越低。请记住取决于物理环境中的低准确度可能是不可能的。</p>
 <h3 id="区域监控"><a href="#区域监控" class="headerlink" title="区域监控"></a>区域监控</h3><p>类似于现有的“电子栅栏”的区域监控，当设备进入或者离开一个iBeacon监控区域时，应用能够接收到通知信息。当一个应用使用这个请求开始监控一个Beacon区域时，它必须指定iBeacon广告的UUID。 当一个app被限制在20个监控区域时，使用单一的UUID在多个地址，一个设备能够容易的同时监控多个物理地址。如上连锁零售店的例子，一个设备能够监控3个不同的店而使用同一个UUID。这个UUID为基础的方法相比，“电子栅栏”的影响不可低估：用一行代码的应用程序可以建立周围的物体或地点任意数量的监视区。</p>
 <p>除了UUID，应用程序还可以选择Major和Minor字段进一步指定一个Beacon监控区域。同样是连锁零售店例子，如果app只指定UUID，在进入或离开任何一家监控的分店时，都会收到通知。由于Major字段被用来指定特定分店，app会使用UUID＋Major配置Beacon监控区域。或者用户只对特定的部门感兴趣，则app使用UUID+Major+Minor的值。这种颗粒级别由程序开发者设定，并能够动态的指定。</p>
 <p>现有的区域检测，用户进入或者推出时都会收到通知。如果app没有实时运行（比如由于内存关系被关闭），然后app会在后台运行并发生通知。一个重要的考虑是在iOS7设备中，如果用户明确后台程序不刷新（不论是全局或者指定你的app），然后你的app就不会再收到区域监控的通知。但是他还能继续使用测距的API。</p>
 <p>由于基于低功耗蓝牙技术，典型的范围在几十米，比“电子栅栏”（百米至少）更加精确。通过上述论述，“电子栅栏”在室内精度较低，所以使用iBeacon技术能极大的提高室内的区域监控。然而，精确度又会被Beacon打物理位置所影响，不论用户将设备放在背包里，或者简单的处于设备和beacon之间都会影响监控区域的进入和退出检测。</p>
 <h3 id="测距"><a href="#测距" class="headerlink" title="测距"></a>测距</h3><p>iOS7 引入了新的APIs 用于确定到信号源的大致距离，使用iBeacon技术。基于常见的使用场景，iOS应用过滤器预估到Beacon的接近精确度。这估计是使用以下四个接近状态之一表示：</p>
-<p><img src="iBeacon测距.png" alt=""></p>
+<p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E6%B5%8B%E8%B7%9D.png" alt="iBeacon测距"></p>
 <h2 id="iBeacon用户体验的考虑"><a href="#iBeacon用户体验的考虑" class="headerlink" title="iBeacon用户体验的考虑"></a>iBeacon用户体验的考虑</h2><p>虽然有接近状态和准确性之间的相关性，但是映射关系不一定是1:1。考虑连锁零售店安装遍布全国的例子，一个应用程序可以使用区域的监测，检测进入到店里来触发本地通知，欢迎用户到店，并邀请他们来启动应用程序。未避免骚扰到用户，app可以设置为只有用户第一次进入商店时，发送通知信息。</p>
 <p>一旦内嵌该应用，一个店内定制接口可以提交。如果iBeacon的广告Major字段包含特殊分店地址，那么app就能立马知道用户进入哪个商店。一个理想的测距情况是应用程序运行在最前端，设备拿在用户手上，屏幕点亮。大型家装卖场往往有许多走道和部门。将Beacon设备安装在每个通道的端部和各部门内，app就能够通过和Beacon的接近状态，可以在地图应用中显示用户的大致位置。</p>
 <p>虽然在这个例子中有许多情况导致出现Near或Immediate（如果用户手持iphone到特定的Beacon点时），但是由于物理对象（通常为金属架，大型笨重显示项目等），所以客户却看到出现proximities或者Far的情况。在这种情况下，app可能会显示附近的其他Beacon点，而不会锁定到用户附近的信号源。相反，app可能希望用户手动指定该最有关联的店（不论是他们的兴趣或者他们实际最近的Beacon位置）。</p>
@@ -130,7 +130,7 @@
 4.    在校准的期间，收集CLBeacon的rssi属性的值
 5.    平均收集的RSSI值，以获得测得的值。
 6.    应用这个测量值，参考使用的Becean的详细说明，不同厂商之间有可能不相同
-</code></pre><p><img src="iBeacon校准.png" alt=""></p>
+</code></pre><p><img src="http://7xsqs0.com2.z0.glb.clouddn.com/image/iBeacon%E6%A0%A1%E5%87%86.png" alt="iBeacon校准"></p>
 <p>如上所讨论的，物理环境可以影响信号强度。因为每个Beacon的安装环境几乎可以肯定会发生变化，所以重复以上步骤安装Beacon是非常重要的。</p>
 <h3 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h3><p>为了获得最佳的用户体验和成功部署，一定要考虑以下最佳做法：</p>
 <pre><code>1.    测距的API不会在后台使用。为获得最佳结果，测距时应该是你的App在最前端，用户与您的app进行交互
