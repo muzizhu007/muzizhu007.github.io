@@ -84,15 +84,15 @@
 
 
 
-<meta name="description" content="Muzizhu&apos;s blog">
+<meta name="description" content="不一样的小世界">
 <meta property="og:type" content="website">
 <meta property="og:title" content="子木的小世界">
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="子木的小世界">
-<meta property="og:description" content="Muzizhu&apos;s blog">
+<meta property="og:description" content="不一样的小世界">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="子木的小世界">
-<meta name="twitter:description" content="Muzizhu&apos;s blog">
+<meta name="twitter:description" content="不一样的小世界">
 
 
 
@@ -181,6 +181,16 @@
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
           </a>
         </li>
       
@@ -294,9 +304,9 @@
       
         
           <p>JNI<code>是</code>JAVA<code>世界和底层世界沟通的重要桥梁，在</code>Android` 的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。<br>本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。</p>
-<h3 id="JAVA层"><a href="#JAVA层" class="headerlink" title="JAVA层"></a>JAVA层</h3><p>首先你需要有个callback 的类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BLDeviceInfoCallback</span> </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">deviceInfo</span><span class="params">(String did, String name, <span class="keyword">boolean</span> state)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然呢在你提供生成JNI的JAVA类里面，添加相应的native函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">setBlDeviceInfoCallback</span><span class="params">(BLDeviceInfoCallback callback)</span></span>;</span><br></pre></td></tr></table></figure></p>
-<p>可以使用javah生成相应的jni的.h文件，类似于<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">JNIEXPORT <span class="keyword">void</span> JNICALL <span class="title">Java_cn_com_broadlink_vtbridge_VtBridegeApi_setBlDeviceInfoCallback</span><span class="params">(JNIEnv *, jobject, jobject)</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="JAVA层"><a href="#JAVA层" class="headerlink" title="JAVA层"></a>JAVA层</h3><p>首先你需要有个callback 的类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BLDeviceInfoCallback</span> </span>&#123;</div><div class="line">    <span class="function">String <span class="title">deviceInfo</span><span class="params">(String did, String name, <span class="keyword">boolean</span> state)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然呢在你提供生成JNI的JAVA类里面，添加相应的native函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">setBlDeviceInfoCallback</span><span class="params">(BLDeviceInfoCallback callback)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>可以使用javah生成相应的jni的.h文件，类似于<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">JNIEXPORT <span class="keyword">void</span> JNICALL <span class="title">Java_cn_com_broadlink_vtbridge_VtBridegeApi_setBlDeviceInfoCallback</span><span class="params">(JNIEnv *, jobject, jobject)</span></span></div></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2017/01/24/JNI-C-C-Callback-from-JAVA/#more" rel="contents">
               阅读全文 &raquo;
@@ -729,7 +739,7 @@
       
         
           <h3 id="CaptiveNetwork-失效"><a href="#CaptiveNetwork-失效" class="headerlink" title="CaptiveNetwork 失效"></a>CaptiveNetwork 失效</h3><p>iOS中关于Wi-Fi相关获取和设置接口比较少，如果不越狱的话，之前常用CaptiveNetwork相关API。<br>然而iOS9中，这部分API已经失效。如果之前使用它来获取Wi-Fi相关信息如下面代码，则有可能无法成功：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;SystemConfiguration/CaptiveNetwork.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">+(<span class="built_in">NSString</span> *) getWiFiSSID&#123;</span><br><span class="line">    <span class="built_in">NSArray</span> *ifs = (__bridge_transfer <span class="keyword">id</span>)CNCopySupportedInterfaces();    </span><br><span class="line">    <span class="keyword">id</span> info = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *ifnam <span class="keyword">in</span> ifs) &#123;</span><br><span class="line">        info = (__bridge_transfer <span class="keyword">id</span>)CNCopyCurrentNetworkInfo((__bridge <span class="built_in">CFStringRef</span>)ifnam);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ =&gt; %@"</span>, ifnam, info);  <span class="comment">//单个数据info[@"SSID"]; info[@"BSSID"];</span></span><br><span class="line">        <span class="keyword">if</span> (info &amp;&amp; [info count]) &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> info ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;SystemConfiguration/CaptiveNetwork.h&gt;</span></span></div><div class="line"></div><div class="line">+(<span class="built_in">NSString</span> *) getWiFiSSID&#123;</div><div class="line">    <span class="built_in">NSArray</span> *ifs = (__bridge_transfer <span class="keyword">id</span>)<span class="built_in">CNCopySupportedInterfaces</span>();    </div><div class="line">    <span class="keyword">id</span> info = <span class="literal">nil</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *ifnam <span class="keyword">in</span> ifs) &#123;</div><div class="line">        info = (__bridge_transfer <span class="keyword">id</span>)<span class="built_in">CNCopyCurrentNetworkInfo</span>((__bridge <span class="built_in">CFStringRef</span>)ifnam);</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ =&gt; %@"</span>, ifnam, info);  <span class="comment">//单个数据info[@"SSID"]; info[@"BSSID"];</span></div><div class="line">        <span class="keyword">if</span> (info &amp;&amp; [info count]) &#123; <span class="keyword">break</span>; &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> info ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>取而代之的则是实用<code>NetworkExtension framework</code>里的<code>NEHotspotHelper class</code>去获取这些信息。</p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/03/22/iOS9-WiFi-Hotspot/#more" rel="contents">
@@ -900,7 +910,7 @@
                src="/images/zhu.png"
                alt="Muzizhu" />
           <p class="site-author-name" itemprop="name">Muzizhu</p>
-          <p class="site-description motion-element" itemprop="description">Muzizhu's blog</p>
+          <p class="site-description motion-element" itemprop="description">不一样的小世界</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
