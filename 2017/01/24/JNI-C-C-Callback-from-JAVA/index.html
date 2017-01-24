@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android Work," />
 
 
 
@@ -84,15 +84,19 @@
 
 
 
-<meta name="description" content="Muzizhu&apos;s blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="子木的小世界">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="JNI 是 JAVA 世界和JNI 是 JAVA世界和底层世界沟通的重要桥梁，在Android的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。
+###JAVA层首先你需要有个callback 的类：123public interface BLDeviceInfoCallback &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JNI C/C++ Callback from JAVA">
+<meta property="og:url" content="http://yoursite.com/2017/01/24/JNI-C-C-Callback-from-JAVA/index.html">
 <meta property="og:site_name" content="子木的小世界">
-<meta property="og:description" content="Muzizhu&apos;s blog">
+<meta property="og:description" content="JNI 是 JAVA 世界和JNI 是 JAVA世界和底层世界沟通的重要桥梁，在Android的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。
+###JAVA层首先你需要有个callback 的类：123public interface BLDeviceInfoCallback &amp;#123;">
+<meta property="og:updated_time" content="2017-01-24T05:31:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="子木的小世界">
-<meta name="twitter:description" content="Muzizhu&apos;s blog">
+<meta name="twitter:title" content="JNI C/C++ Callback from JAVA">
+<meta name="twitter:description" content="JNI 是 JAVA 世界和JNI 是 JAVA世界和底层世界沟通的重要桥梁，在Android的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。
+###JAVA层首先你需要有个callback 的类：123public interface BLDeviceInfoCallback &amp;#123;">
 
 
 
@@ -110,7 +114,7 @@
   };
 </script>
 
-  <title> 子木的小世界 </title>
+  <title> JNI C/C++ Callback from JAVA | 子木的小世界 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -131,9 +135,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -220,9 +222,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -242,10 +244,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/01/24/JNI-C-C-Callback-from-JAVA/" itemprop="url">
-                  JNI C/C++ Callback from JAVA
-                </a>
+                JNI C/C++ Callback from JAVA
               
             
           </h1>
@@ -292,9 +291,7 @@
       
 
       
-        
-          
-            <p>JNI 是 JAVA 世界和<br><code>JNI</code> 是 <code>JAVA</code>世界和底层世界沟通的重要桥梁，在<code>Android</code>的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。</p>
+        <p>JNI 是 JAVA 世界和<br><code>JNI</code> 是 <code>JAVA</code>世界和底层世界沟通的重要桥梁，在<code>Android</code>的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。</p>
 <p>###JAVA层<br>首先你需要有个callback 的类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BLDeviceInfoCallback</span> </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">deviceInfo</span><span class="params">(String did, String name, <span class="keyword">boolean</span> state)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>然呢在你提供生成JNI的JAVA类里面，添加相应的native函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">setBlDeviceInfoCallback</span><span class="params">(BLDeviceInfoCallback callback)</span></span>;</span><br></pre></td></tr></table></figure></p>
 <p>可以使用javah生成相应的jni的.h文件，类似于<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">JNIEXPORT <span class="keyword">void</span> JNICALL <span class="title">Java_cn_com_broadlink_vtbridge_VtBridegeApi_setBlDeviceInfoCallback</span><span class="params">(JNIEnv *, jobject, jobject)</span></span></span><br></pre></td></tr></table></figure></p>
@@ -310,572 +307,58 @@
 <pre><code>1.  GetMethodID CallXXXXMethod 以及 GetStaticMethodID CallStaticXXXXMethod 需要根据实际的JAVA方法进行区分，由于在老版本Android平台上上述方法区分不明显，所以可能导致在老版本Android上跑的正常，而到了新版本Android平台上则报错；
 2.  同样由于有些方法是类方法，有些是实例方法，所以在调用CallXXXXMethod和CallStaticXXXXMethod，需要区分清楚具体的参数是jclass还是jobject;
 </code></pre>
-          
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/24/好多事的总结2/" itemprop="url">
-                  好多事的总结2
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-24T10:43:57+08:00" content="2017-01-24">
-              2017-01-24
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/01/24/好多事的总结2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/24/好多事的总结2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
+            <a href="/tags/Android-Work/" rel="tag">#Android Work</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>本想发个2016年的总结的，发现上篇《好多事的总结》已经把上半年的生活工作都已经概况了一遍了，那就不累述。</p>
-<p>下半年的生活呢给了我警醒，家里老人的突然生病和老婆怀上宝宝，让我对生活的压力有了重新的认识–担子更沉重了。<br>生活也不再是我和老婆两个人亲亲我我了，即将出世的小宝宝和来照顾宝宝的老妈或者丈母娘，将要和我们一起生活。</p>
-<p>工作上，新的公司，新的同事，新的环境。<br>同事们都很好，码农嘛，相互之间也没有什么界限，一起吃饭，互相吹吹牛，偶尔拆拆台，不深入，但也很友善。<br>公司在业务上暂时处于领先的地位，但是追赶者众多，而且受制于大厂的地方较多，整体还是一个业务驱动的公司；<br>在人文上就要吐槽下了，没有了之前熊孩纸的福利，处处感觉到抠的状态，幸福指数直线下降；<br>在工作上，不在单纯的搞iOS了，Android，JNI，Lua, Linux C各个方面都需要涉及，<br>具体就是做客户端SDK开发，由于SDK还对外发布，给客户使用，在此过程中还接触了形形色色的客户，吐槽…</p>
-<p>2017 期待 责任 潜心 前行</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/01/24/好多事的总结2/" rel="next" title="好多事的总结2">
+                <i class="fa fa-chevron-left"></i> 好多事的总结2
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/05/30/好多事的总结/" itemprop="url">
-                  好多事的总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-30T09:39:07+08:00" content="2016-05-30">
-              2016-05-30
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/30/好多事的总结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/30/好多事的总结/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>赶在5月的末尾，对过去的小半年做个总结。</p>
-<pre><code>1.房子的装修已完成，5月也入住了，算是在大杭州有个窝的人了；
-2.5月在老家把婚礼也举办了，人生第一次喝醉、喝断片，但很开心；
-3.在树熊也是最后一个月的生活了，很感谢熊孩子们两年来的共事；
-4.6月即将进入新公司，还是物联网(智能硬件方向)，看样子还要在这个圈子里继续厮混；
-</code></pre><p>总体来说，生活上的事情已经都告一段落了，工作上却是一个新的开始，移动互联网方向的热度大不如前了，但这条路还要继续走下。后续需要对移动端的各项技术都要了解，不论iOS、Android，还是HTML5 等等。 </p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/01/iBeacon/" itemprop="url">
-                  Getting Started with iBeacon
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-01T16:18:02+08:00" content="2016-04-01">
-              2016-04-01
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/01/iBeacon/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/01/iBeacon/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>本文为翻译Apple Developer开发文档<a href="https://developer.apple.com/ibeacon/">Getting Started with iBeacon</a>，由于本人水平问题，肯定存在诸多问题，请见谅！</p>
-</blockquote>
-<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>iBeacon是在iOS7新推出的感知位置可能性的应用。利用低功耗蓝牙（BLE），携带iBeancon技术的设备能够围绕某一对象建立监测区域。依据iOS设备与信号源之间的距离，能够判断设备何时进入或者离开该区域。所以在使用iBeacon技术时需要有硬件和软件两方面的考虑，本文档对两方面都进行了介绍，包括使用建议和最佳实践，确保有个高效的部署，使得有个优秀的用户体验。</p>
-<p>iBeacon有三个不同的角色，根据你的需求，你有可能扮演其中的一个，两个甚至三个：</p>
-<pre><code>1.    APP 开发者
-    如果你想要添加iBeacon到你的应用内，你需要使用Core Location APIs ,当iOS设备进入或者离开检测区域时，能够收到iOS的通知。你同样也能够将设备发送iBeacon广告。所以这些你只需在程序内包含iOS SDK即可，无需license。
-
-2.    部署iBeacon设备
-    无论你管理一个体育竞技场，博物馆，零售商店，或其他任何地方来使用beacons的设备，你需要了解这些设备的工作原理，周围的信号强度和材料的问题，并了解如何校准和测试部署。如果你想使用iBeacon Logo在会场内，而不会使用iBeacon技术的设备，在使用之前需要申请iBeacon Logo 的licese。可以通过访问
-    https:// developer.apple.com/ibeacon/ 
-    申请。
-
-3.    使用iBeacon技术制造设备
-    如果你有兴趣制造iBeacon技术的设备，你需要在制造之前申请license。可以通过访问https://developer.apple.com/ibeacon/ 
-    申请iBeacon license。 被许可方可以访问相关技术规范，使用iBeacon logo以及iBeacon的识别指南。
-</code></pre>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/01/iBeacon/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/22/iOS9-WiFi-Hotspot/" itemprop="url">
-                  iOS9_WiFi_Hotspot
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-22T19:46:21+08:00" content="2016-03-22">
-              2016-03-22
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/22/iOS9-WiFi-Hotspot/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/22/iOS9-WiFi-Hotspot/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="CaptiveNetwork-失效"><a href="#CaptiveNetwork-失效" class="headerlink" title="CaptiveNetwork 失效"></a>CaptiveNetwork 失效</h3><p>iOS中关于Wi-Fi相关获取和设置接口比较少，如果不越狱的话，之前常用CaptiveNetwork相关API。<br>然而iOS9中，这部分API已经失效。如果之前使用它来获取Wi-Fi相关信息如下面代码，则有可能无法成功：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;SystemConfiguration/CaptiveNetwork.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">+(<span class="built_in">NSString</span> *) getWiFiSSID&#123;</span><br><span class="line">    <span class="built_in">NSArray</span> *ifs = (__bridge_transfer <span class="keyword">id</span>)CNCopySupportedInterfaces();    </span><br><span class="line">    <span class="keyword">id</span> info = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *ifnam <span class="keyword">in</span> ifs) &#123;</span><br><span class="line">        info = (__bridge_transfer <span class="keyword">id</span>)CNCopyCurrentNetworkInfo((__bridge <span class="built_in">CFStringRef</span>)ifnam);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@ =&gt; %@"</span>, ifnam, info);  <span class="comment">//单个数据info[@"SSID"]; info[@"BSSID"];</span></span><br><span class="line">        <span class="keyword">if</span> (info &amp;&amp; [info count]) &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> info ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>取而代之的则是实用<code>NetworkExtension framework</code>里的<code>NEHotspotHelper class</code>去获取这些信息。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/22/iOS9-WiFi-Hotspot/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/22/新的开始/" itemprop="url">
-                  新的开始
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-22T16:12:14+08:00" content="2016-03-22">
-              2016-03-22
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/22/新的开始/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/22/新的开始/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>不知不觉，工作已经将近5年，在技术路线上走的也是磕磕碰碰，终于也是找到了一条自己喜欢的路。俗话说三十而立，而如今已经28的我，已经成家的我，其实还是没有立业，接下去的两年里，需要按下自己躁动的心，耐心的做点事情，不说实现XXX目标，至少在下次做总结时，不是这么低落。</p>
-<p>技术上，既然路也选好，那就要耐心前行，一步一步攀登，切勿好高骛远。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -883,6 +366,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/24/JNI-C-C-Callback-from-JAVA/"
+           data-title="JNI C/C++ Callback from JAVA" data-url="http://yoursite.com/2017/01/24/JNI-C-C-Callback-from-JAVA/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -902,8 +393,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/zhu.png"
@@ -960,6 +460,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -1056,6 +567,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
