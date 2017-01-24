@@ -293,7 +293,10 @@
 
       
         
-          <p>JNI<code>是</code>JAVA<code>世界和底层世界沟通的重要桥梁，在</code>Android` 的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。<br>本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。<br>
+          <p>JNI<code>是</code>JAVA<code>世界和底层世界沟通的重要桥梁，在</code>Android` 的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。<br>本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。</p>
+<h3 id="JAVA层"><a href="#JAVA层" class="headerlink" title="JAVA层"></a>JAVA层</h3><p>首先你需要有个callback 的类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BLDeviceInfoCallback</span> </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">deviceInfo</span><span class="params">(String did, String name, <span class="keyword">boolean</span> state)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然呢在你提供生成JNI的JAVA类里面，添加相应的native函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">setBlDeviceInfoCallback</span><span class="params">(BLDeviceInfoCallback callback)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>可以使用javah生成相应的jni的.h文件，类似于<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">JNIEXPORT <span class="keyword">void</span> JNICALL <span class="title">Java_cn_com_broadlink_vtbridge_VtBridegeApi_setBlDeviceInfoCallback</span><span class="params">(JNIEnv *, jobject, jobject)</span></span></span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2017/01/24/JNI-C-C-Callback-from-JAVA/#more" rel="contents">
               阅读全文 &raquo;
