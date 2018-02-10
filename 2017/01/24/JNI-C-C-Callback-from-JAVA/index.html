@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="JNI是JAVA世界和底层世界沟通的重要桥梁，在Android` 的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。
+<meta name="description" content="JNI 是 JAVA世界和底层世界沟通的重要桥梁，在Android的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。
 JAVA层首先你需要有个callback 的类：123public interface BLDeviceInfoCallback &amp;#123;    String device">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JNI C/C++ Callback from JAVA">
 <meta property="og:url" content="http://yoursite.com/2017/01/24/JNI-C-C-Callback-from-JAVA/index.html">
 <meta property="og:site_name" content="子木的小世界">
-<meta property="og:description" content="JNI是JAVA世界和底层世界沟通的重要桥梁，在Android` 的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。
+<meta property="og:description" content="JNI 是 JAVA世界和底层世界沟通的重要桥梁，在Android的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。
 JAVA层首先你需要有个callback 的类：123public interface BLDeviceInfoCallback &amp;#123;    String device">
-<meta property="og:updated_time" content="2017-01-24T05:39:41.000Z">
+<meta property="og:updated_time" content="2018-02-10T02:04:51.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JNI C/C++ Callback from JAVA">
-<meta name="twitter:description" content="JNI是JAVA世界和底层世界沟通的重要桥梁，在Android` 的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。
+<meta name="twitter:description" content="JNI 是 JAVA世界和底层世界沟通的重要桥梁，在Android的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。
 JAVA层首先你需要有个callback 的类：123public interface BLDeviceInfoCallback &amp;#123;    String device">
 
 
@@ -301,7 +301,7 @@ JAVA层首先你需要有个callback 的类：123public interface BLDeviceInfoCa
       
 
       
-        <p>JNI<code>是</code>JAVA<code>世界和底层世界沟通的重要桥梁，在</code>Android` 的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。<br>本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。</p>
+        <p><code>JNI</code> 是 <code>JAVA</code>世界和底层世界沟通的重要桥梁，在<code>Android</code>的底层开发中用到的较多。相关知识在网络上也容易搜索到，这里也不再累述。<br>本篇文章，要介绍的是，在Java通过JNI传递一个callback函数到C/C++中。</p>
 <h3 id="JAVA层"><a href="#JAVA层" class="headerlink" title="JAVA层"></a>JAVA层</h3><p>首先你需要有个callback 的类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BLDeviceInfoCallback</span> </span>&#123;</div><div class="line">    <span class="function">String <span class="title">deviceInfo</span><span class="params">(String did, String name, <span class="keyword">boolean</span> state)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>然呢在你提供生成JNI的JAVA类里面，添加相应的native函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">setBlDeviceInfoCallback</span><span class="params">(BLDeviceInfoCallback callback)</span></span>;</div></pre></td></tr></table></figure></p>
 <p>可以使用javah生成相应的jni的.h文件，类似于<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">JNIEXPORT <span class="keyword">void</span> JNICALL <span class="title">Java_cn_com_broadlink_vtbridge_VtBridegeApi_setBlDeviceInfoCallback</span><span class="params">(JNIEnv *, jobject, jobject)</span></span></div></pre></td></tr></table></figure></p>
@@ -497,7 +497,7 @@ JAVA层首先你需要有个callback 的类：123public interface BLDeviceInfoCa
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
